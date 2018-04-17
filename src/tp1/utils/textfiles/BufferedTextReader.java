@@ -6,10 +6,10 @@ import java.nio.file.*;
 public class BufferedTextReader implements TextReader {
 	private BufferedReader buf;
 	
-	public BufferedTextReader(String route) {
+	public BufferedTextReader(String line) {
 		try {
-			route = Paths.get(route).toString();
-			buf = new BufferedReader(new FileReader(route));
+			Path path = Paths.get(line);
+			buf = new BufferedReader(new FileReader(path.toString()));
 		} catch (IOException e) {
 			e.getMessage();
 		}
@@ -22,11 +22,13 @@ public class BufferedTextReader implements TextReader {
 
 	@Override
 	public String readLine() {
+		String line = null;
 		try {
-			buf.readLine();
+			line = buf.readLine();
 		} catch (IOException e) {
+			e.getMessage();
 		}
-		return null;
+		return line;
 	}
 
 	@Override

@@ -1,18 +1,23 @@
 package tp1.utils.textfiles;
 
 import java.io.*;
+import java.nio.file.*;
 
 public class BufferedTextWriter implements TextWriter {
 	private BufferedWriter buf;
 	
 	public BufferedTextWriter(String line) {
-		
+		try {
+			Path path = Paths.get(line);
+			buf = new BufferedWriter(new FileWriter(path.toString()));
+		} catch (IOException e) {
+			e.getMessage();
+		}
 	}
 
 	@Override
 	public boolean isReady() {
-		// TODO Auto-generated method stub
-		return false;
+		return buf != null;
 	}
 
 	@Override
