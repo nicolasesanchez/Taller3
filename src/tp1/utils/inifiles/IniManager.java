@@ -3,8 +3,8 @@ package tp1.utils.inifiles;
 import tp1.utils.textfiles.*;
 import java.util.ArrayList;
 
-public class IniManager implements TextWriter, TextReader {
-	private String filename;
+public class IniManager {//implements TextWriter, TextReader {
+	/*private String filename;
 	private ArrayList<Section> sections;
 
 	public IniManager() {
@@ -89,5 +89,5 @@ public class IniManager implements TextWriter, TextReader {
     @Override
     public void close() {
 
-    }
+    }*/
 }

@@ -8,8 +8,12 @@ public class BufferedTextWriter implements TextWriter {
 
     public BufferedTextWriter(String line) {
         try {
-            Path path = Paths.get(line);
-            buf = new BufferedWriter(new FileWriter(path.toString()));
+            
+            File file = new File(line);
+            if (!file.exists() || !file.isDirectory()) {
+                buf = new BufferedWriter(new FileWriter(file));    
+            }
+            
         } catch (IOException e) {
             e.getMessage();
         }
@@ -23,7 +27,7 @@ public class BufferedTextWriter implements TextWriter {
     @Override
     public void writeLine(String line) {
         try {
-            buf.write(line);
+            buf.write(line + "\n");
         } catch (IOException e) {
             e.getMessage();
         }

@@ -1,22 +1,31 @@
 package tp1.utils.textfiles;
 
+import java.nio.file.*;
+
 public class Program {
 
     public static void main(String[] args) {
-        String route = "/Users/nicsanchez/Downloads/hola.txt";
+
+        Path localPath = Paths.get("");
+        Path programPath = Paths.get("/src/tp1/utils/textfiles/Program.java");
+        Path savingPath = Paths.get("/src/tp1/utils/textfiles/Program.txt");
+
+        String route = (localPath.toAbsolutePath().toString() + programPath.toString());
+        String newFile = (localPath.toAbsolutePath().toString() + savingPath.toString());
 
         BufferedTextReader br = new BufferedTextReader(route);
+        BufferedTextWriter bw = new BufferedTextWriter(newFile);
 
-        BufferedTextWriter bw = new BufferedTextWriter(route);
+        if (br.isReady()) {
+            String firstLine = br.readLine();
 
-        if (bw.isReady()) {
-            bw.writeLine("hola mundo ahre\n");
-            bw.writeLine("esto es otra linea");
-            bw.close();
+            if (firstLine != null && bw.isReady()) {
+                bw.writeLine(firstLine);
+            }
         }
 
-        System.out.println(br.readLine());
-
         br.close();
+        bw.close();
+
     }
 }
