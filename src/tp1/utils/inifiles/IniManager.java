@@ -3,8 +3,8 @@ package tp1.utils.inifiles;
 import tp1.utils.textfiles.*;
 import java.util.ArrayList;
 
-public class IniManager {//implements TextWriter, TextReader {
-	/*private String filename;
+public class IniManager {
+	private String filename;
 	private ArrayList<Section> sections;
 
 	public IniManager() {
@@ -70,24 +70,5 @@ public class IniManager {//implements TextWriter, TextReader {
 	private boolean isComentario(String comment) {
 
 	}
-
-    @Override
-    public String readLine() {
-        return null;
-    }
-
-    @Override
-    public boolean isReady() {
-        return false;
-    }
-
-    @Override
-    public void writeLine(String line) {
-
-    }
-
-    @Override
-    public void close() {
-
-    }*/
+	
 }

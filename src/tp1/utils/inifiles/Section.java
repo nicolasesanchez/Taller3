@@ -5,7 +5,7 @@ import tp1.utils.textfiles.*;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class Section implements TextWriter {
+public class Section {
     private String name;
     private HashMap<String, String> items;
 
@@ -49,20 +49,5 @@ public class Section implements TextWriter {
     public boolean remove(String item) {
         return this.items.remove(item) != null;
     }
-
-
-    @Override
-    public boolean isReady() {
-        return false;
-    }
-
-    @Override
-    public void writeLine(String line) {
-
-    }
-
-    @Override
-    public void close() {
-
-    }
+    
 }
