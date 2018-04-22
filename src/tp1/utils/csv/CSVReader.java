@@ -11,7 +11,7 @@ public abstract class CSVReader<ClassType> {
     private String header;
 
     public CSVReader(String line) {
-
+        header = line;
     }
 
     public void readAll(String line, List<ClassType> list, ControlLevelError cle) {

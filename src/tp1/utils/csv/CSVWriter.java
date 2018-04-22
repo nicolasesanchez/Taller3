@@ -13,6 +13,12 @@ public abstract class CSVWriter<ClassType> {
     }
 
     public void writeAll(String line, List<ClassType> list) {
+        line += CSV_EXTENSION;
+        TextWriter tw = new BufferedTextWriter(line);
+        if (tw.isReady() && !list.isEmpty()) {
+            writeHeader(tw);
+            writeItems(tw, list);
+        }
 
     }
 
@@ -22,7 +28,8 @@ public abstract class CSVWriter<ClassType> {
 
     private void writeItems(TextWriter tw, List<ClassType> list) {
         for (ClassType item : list) {
-            tw.writeLine(item.toString());
+            String itemLine = ((CSVCompatible<String>) item).toCSV();
+            tw.writeLine(itemLine);
         }
     }
 }
