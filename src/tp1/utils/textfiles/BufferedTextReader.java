@@ -8,10 +8,8 @@ public class BufferedTextReader implements TextReader {
 
     public BufferedTextReader(String line) {
         try {
-
             Path path = Paths.get(new File(line).toString());
             buf = new BufferedReader(new FileReader(path.toString()));
-
         } catch (IOException e) {
             e.getMessage();
         }

@@ -36,18 +36,21 @@ public class Section {
     }
 
     public void list() {
-        System.out.printf("[%s]", this.name);
+        System.out.printf("[%s]%n", this.name);
         for (Entry<String, String> item : items.entrySet()) {
-            System.out.println(item);
+            System.out.printf("%s%n", item.toString());
         }
     }
 
-    public void save(TextWriter tw) {
-            tw.close(); // TODO revisar
+    public void save(TextWriter tw) throws Exception {
+        tw.writeLine("[" + this.name + "]");
+        for (Entry<String, String> it : items.entrySet()) {
+            tw.writeLine(it.toString());
+        }
     }
 
     public boolean remove(String item) {
         return this.items.remove(item) != null;
     }
-    
+
 }

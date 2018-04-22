@@ -8,12 +8,10 @@ public class BufferedTextWriter implements TextWriter {
 
     public BufferedTextWriter(String line) {
         try {
-            
             File file = new File(line);
             if (!file.exists() || !file.isDirectory()) {
                 buf = new BufferedWriter(new FileWriter(file));    
             }
-            
         } catch (IOException e) {
             e.getMessage();
         }
