@@ -1,4 +1,5 @@
-.idea/*
+.idea/
 *.iml
 .DS_Store
 *.class
+.idea/workspace.xml

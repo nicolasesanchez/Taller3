@@ -1,6 +1,5 @@
 package tp1.utils.csv;
 
-import tp1.ej3.entidades.Articulo;
 import tp1.utils.textfiles.*;
 
 import java.util.List;
