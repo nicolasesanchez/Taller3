@@ -5,11 +5,11 @@ import tp1.utils.csv.CSVReader;
 public class ArticuloReader extends CSVReader {
 
     public ArticuloReader() {
-
+        super("?");
     }
 
     @Override
     protected Articulo fromCSV(String line) {
-        return null;
+        return new Articulo(line);
     }
 }

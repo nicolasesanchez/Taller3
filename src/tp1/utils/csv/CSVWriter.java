@@ -18,6 +18,7 @@ public abstract class CSVWriter<ClassType> {
         if (tw.isReady() && !list.isEmpty()) {
             writeHeader(tw);
             writeItems(tw, list);
+            tw.close();
         }
 
     }
@@ -28,8 +29,7 @@ public abstract class CSVWriter<ClassType> {
 
     private void writeItems(TextWriter tw, List<ClassType> list) {
         for (ClassType item : list) {
-            String itemLine = ((CSVCompatible<String>) item).toCSV();
-            tw.writeLine(itemLine);
+            tw.writeLine(item.toString());
         }
     }
 }
