@@ -1,6 +1,6 @@
 package tc3.tp3.utils.db;
 
-import java.lang.IllegalArgumentException;
+import java.lang.reflect.InvocationTargetException;
 
 public class DBEnviroment {
     public static final String K_PASSWORD = "password";
@@ -24,11 +24,11 @@ public class DBEnviroment {
 
     private String whiteSpaceRegex = "\\s*";
 
-    public DBEnviroment(String enviromentName) {
-        setValues(enviromentName, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED);
+    public DBEnviroment(String enviromentName) throws IllegalArgumentException {
+        this(enviromentName, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED);
     }
 
-    public DBEnviroment(String enviromentName, String driver, String server, String port, String database, String username, String password) {
+    public DBEnviroment(String enviromentName, String driver, String server, String port, String database, String username, String password) throws IllegalArgumentException {
         setValues(enviromentName, driver, server, port, database, username, password);
     }
 
@@ -41,6 +41,7 @@ public class DBEnviroment {
     }
 
     public void setDriver(String driver) {
+        checkValue(driver, K_DRIVER);
         this.driver = driver;
     }
 
@@ -49,6 +50,7 @@ public class DBEnviroment {
     }
 
     public void setServer(String server) {
+        checkValue(server, K_SERVER);
         this.server = server;
     }
 
@@ -57,6 +59,7 @@ public class DBEnviroment {
     }
 
     public void setPort(String port) {
+        checkValue(port, K_PORT);
         this.port = port;
     }
 
@@ -65,6 +68,7 @@ public class DBEnviroment {
     }
 
     public void setDatabase(String database) {
+        checkValue(database, K_DATABASE);
         this.database = database;
     }
 
@@ -73,6 +77,7 @@ public class DBEnviroment {
     }
 
     public void setUsername(String username) {
+        checkValue(username, K_USERNAME);
         this.username = username;
     }
 
@@ -81,60 +86,53 @@ public class DBEnviroment {
     }
 
     public void setPassword(String password) {
+        checkValue(password, K_PASSWORD);
         this.password = password;
     }
 
     public String getURL() {
-        return null;
+        return String.format(CONN_STRING_TEMPLATE, driver, server, port, database, username, password);
     }
 
-    public void setValueOf(String a, String b) {
+    public void setValueOf(String attribute, String value) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        attribute = attribute.toLowerCase().trim();
+        attribute = attribute.substring(0, 1).toUpperCase() + attribute.substring(1);
+        this.getClass()
+                .getMethod("set" + attribute, String.class)
+                .invoke(this, value);
     }
 
-    protected void setValues(String enviromentName, String driver, String server, String port, String database, String username, String password) {
-        try {
-            setEnviromentName(validateValue(enviromentName));
-            setDriver(validateValue(driver));
-            setServer(validateValue(server));
-            setPort(validateValue(port));
-            setDatabase(validateValue(database));
-            setUsername(validateUserAndPass(username));
-            setPassword(validateUserAndPass(password));
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        }
+    protected void setValues(String enviromentName, String driver, String server, String port, String database, String username, String password) throws IllegalArgumentException {
+        setEnviromentName(enviromentName);
+        setDriver(driver);
+        setServer(server);
+        setPort(port);
+        setDatabase(database);
+        setUsername(username);
+        setPassword(password);
     }
 
     private void setEnviromentName(String name) {
+        checkValue(name, K_ENVIROMENT);
         enviromentName = name;
     }
 
-    private void checkValue(String a, String b) {
-
-    }
-
-    private String validateValue(String value) throws IllegalArgumentException {
-        if (value == null || value.matches(whiteSpaceRegex)) {
-            throw new IllegalArgumentException("The value cannot be null or empty");
-        } else {
-            return value;
+    private void checkValue(String fieldValue, String fieldName) throws IllegalArgumentException {
+        if (!fieldName.equals(K_PASSWORD) || !fieldName.equals(K_USERNAME)) {
+            if (fieldValue == null || fieldValue.matches(whiteSpaceRegex)) {
+                throw new IllegalArgumentException();
+            }
         }
+        fieldValue = UNDEFINED;
     }
 
-    private String validateUserAndPass(String value) {
-        String data = value;
 
-        if (data.matches(whiteSpaceRegex) || data == null) {
-            data = UNDEFINED;
-        }
-
-        return data;
-    }
-
-    public static void main(String[] args) {
-        DBEnviroment db = new DBEnviroment("");
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        DBEnviroment db = new DBEnviroment("ambiente");
         //DBEnviroment db1 = new DBEnviroment("   ");
         //DBEnviroment db2 = new DBEnviroment(null);
+        db.setValueOf("driver", "asldñka");
+        System.out.println(db.getURL());
 
         System.out.println(db.getEnviromentName());
         //System.out.println(db1.getEnviromentName());
